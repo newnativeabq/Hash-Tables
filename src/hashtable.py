@@ -41,13 +41,13 @@ class LinkedList():
         return None
 
     def add(self, key, value):
-        print('Adding: ', key, value)
+        # print('Adding: ', key, value)
         end = self.head
         while end.next is not None:
-            print('chain node', end.key, end.value)
+            # print('chain node', end.key, end.value)
             end = end.next
         end.next = Node(key, value)
-        print('added node', end.next.key, end.next.value)
+        # print('added node', end.next.key, end.next.value)
 
     def remove(self, key):
         current_node = self.head 
@@ -128,7 +128,7 @@ class HashTable:
         Fill this in.
         '''
         index = self._hash_mod(key)
-        print('working_index: ', index)
+        # print('working_index: ', index)
         if self.storage[index] is None:
             self.storage[index] = LinkedList(node = Node(key, value))
         else:
@@ -150,12 +150,12 @@ class HashTable:
         '''
         index = self._hash_mod(key)
         if self.storage[index] is None:
-            raise KeyError('Key Not Found')
+            raise KeyError(f'Key Not Found {key} at index {index}')
         else:
             llist = self.storage[index]
             search = llist.search_key(key)
             if search is None:
-                raise KeyError('Key Not Found')
+                raise KeyError(f'Key Not Found {key} at index {index}')
             else:
                 search.delete()
 
@@ -170,14 +170,14 @@ class HashTable:
         index = self._hash_mod(key)
         if self.storage[index] is None:
             print(f'Head Index {index} is None')
-            raise KeyError(f'Key Not Found {key}')
+            raise KeyError(f'Key Not Found {key} at index {index}')
 
         else:
             llist = self.storage[index]
             search = llist.search_key(key)
             print('Search Result', search)
             if search is None:
-                raise KeyError(f'Key Not Found {key}')
+                raise KeyError(f'Key Not Found {key} at index {index}')
             else:
                 return search.value
 
@@ -193,6 +193,7 @@ class HashTable:
             print('moving node ', node.key, node.value)
             temp_hash_table.insert(node.key, node.value)
         self.storage = temp_hash_table.storage
+        self.capacity = temp_hash_table.capacity
 
     def list_nodes(self):
         nodes = []
@@ -200,6 +201,7 @@ class HashTable:
             if llist is not None:
                 for node in llist.list():
                     nodes.append(node)
+        print(nodes)
         return nodes
 
 
